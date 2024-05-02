@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .forms import DocumentForm
 from portfolio_backend.firestore_utils import create_document, get_document, fetch_all_documents  # Adjust import path
 
 def document_list(request):
-    # We'll need to adapt how we fetch documents for Firestore
-    documents_data = fetch_all_documents()
-    return render(request, 'documents/document_list.html', {'documents': documents_data})
+    documents = fetch_all_documents()
+    if documents:
+        return render(request, 'documents/document_list.html', {'documents': documents})
+    else:
+        return render(request, 'documents/document_list.html', {'empty': True})  # Indicate empty
 
 def document_create(request):
     if request.method == 'POST':
@@ -25,3 +28,14 @@ def document_detail(request, document_id):  # Change from 'pk'
     else:
         # Handle document not found scenario
         pass  # Replace with error handling
+
+def test_firestore(request):
+    try:
+        # Create a sample document
+        create_document("Test Document", "This is a sample code snippet.")
+
+        # Fetch all documents
+        documents = fetch_all_documents()
+        return HttpResponse(f"Firestore connection successful! Found {len(documents)} documents.") 
+    except Exception as e: 
+        return HttpResponse(f"Firestore connection error: {str(e)}")

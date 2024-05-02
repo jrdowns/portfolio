@@ -1,13 +1,17 @@
-{% extends 'base.html' %}
-
-{% block title %}Code Snippets{% endblock %}
-
+{% extends 'base.html' %} 
 {% block content %}
-    <h1>Code Snippets</h1>
-    <ul>
-        {% for document in documents %}
-            <li><a href="{% url 'document_detail' document.pk %}">{{ document.title }}</a></li>
-        {% endfor %}
+
+  <h1>Code Snippets</h1>
+
+  {% if empty %}
+    <p>No documents found yet!</p>
+  {% else %}
+    <ul> {% for document in documents %}
+        <li><a href="{% url 'document_detail' document.id %}">{{ document.title }}</a></li>
+      {% endfor %}
     </ul>
-    <a href="{% url 'document_create' %}">Create New Snippet</a>
-{% endblock %}
+  {% endif %}
+
+  <a href="{% url 'document_create' %}">Create New Snippet</a>
+
+{% endblock %} 
