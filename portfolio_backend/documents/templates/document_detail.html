@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ document.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ document.title }}</h1>
+    <pre><code class="language-{{ document.language }}">{{ document.code_content }}</code></pre>
+
+    {% block extra_scripts %}
+    <script>Prism.highlightAll();</script> 
+    {% endblock %} 
+{% endblock %}
