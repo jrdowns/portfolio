@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from portfolio_backend.firestore_utils import db  # Import Firestore client
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,15 +79,16 @@ WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.datastore',
-        'NAME': '/portfolio-422119',
-        # Optionally, if you need to specify host/port (usually for local development)
-        'HOST': '127.0.0.1', 
-        'PORT': '8081',  
-    }
-}
+# Not needed since using Firestore
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.datastore',
+#         'NAME': '/portfolio-422119',
+#         # Optionally, if you need to specify host/port (usually for local development)
+#         'HOST': '127.0.0.1', 
+#         'PORT': '8000',  
+#     }
+# }
 
 
 # Password validation
@@ -129,3 +131,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Firebase initialization
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+cred = credentials.ApplicationDefaultCredentials.from_env()
+firebase_admin.initialize_app(cred)
+db = firestore.client()  # Access to Firestore database
