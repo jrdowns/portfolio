@@ -27,7 +27,7 @@ Frontend:
   - Node.js (to install npm packages)  
   - Google Cloud Project with a Firestore database  
 ### 2. Setup  
-  - Clone the repository: git clone https://github.com/your-username/your-repo-name.git  
+  - Clone the repository: git clone https://github.com/jrdowns/portfolio.git  
   - Install dependencies: pip install -r requirements.txt  
   - Set up the Firebase configuration in firestore_utils.py with your project credentials.  
 ### 3. Run the Development Server  
