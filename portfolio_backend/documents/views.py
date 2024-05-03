@@ -6,9 +6,9 @@ from portfolio_backend.firestore_utils import create_document, get_document, fet
 def document_list(request):
     documents = fetch_all_documents()
     if documents:
-        return render(request, 'documents/document_list.html', {'documents': documents})
+        return render(request, 'document_list.html', {'documents': documents})
     else:
-        return render(request, 'documents/document_list.html', {'empty': True})  # Indicate empty
+        return render(request, 'document_list.html', {'empty': True})  # Indicate empty
 
 def document_create(request):
     if request.method == 'POST':
@@ -19,12 +19,12 @@ def document_create(request):
             return redirect('document_list')  
     else:
         form = DocumentForm()
-    return render(request, 'documents/document_create.html', {'form': form})
+    return render(request, 'document_create.html', {'form': form})
 
 def document_detail(request, document_id):  # Change from 'pk' 
     document_data = get_document(document_id)
     if document_data:
-        return render(request, 'documents/document_detail.html', {'document': document_data})
+        return render(request, 'document_detail.html', {'document': document_data})
     else:
         # Handle document not found scenario
         pass  # Replace with error handling

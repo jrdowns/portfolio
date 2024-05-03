@@ -26,6 +26,8 @@ def get_document(document_id):
 
 def fetch_all_documents():
     documents = []
-    for doc in documents_ref.stream():  # Firestore query to get all
-        documents.append(doc.to_dict())
+    for doc in documents_ref.stream():
+        document_data = doc.to_dict()
+        document_data['id'] = doc.id  # Assign the ID explicitly
+        documents.append(document_data)
     return documents
