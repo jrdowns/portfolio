@@ -31,3 +31,20 @@ def fetch_all_documents():
         document_data['id'] = doc.id  # Assign the ID explicitly
         documents.append(document_data)
     return documents
+
+def create_comment(document_id, line_number, text, author=None):
+    comment_data = {
+        'lineNumber': line_number,
+        'text': text,
+        'createdAt': firestore.SERVER_TIMESTAMP
+    }
+    if author:
+        comment_data['author'] = author  
+
+    doc_ref = documents_ref.document(document_id)
+    comment_ref = doc_ref.collection('comments').add(comment_data)
+    return comment_ref.id  # Return the comment ID for potential use
+
+def get_comments(document_id):
+    doc_ref = documents_ref.document(document_id)
+    return doc_ref.collection('comments').order_by('lineNumber').stream() 
